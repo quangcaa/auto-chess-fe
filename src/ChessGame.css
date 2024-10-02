@@ -1,0 +1,9 @@
+.chessboard {
+    width: 900px;
+    height: 900px;
+}
+
+.chess-container{
+    justify-content: center;
+    align-items: center;
+}
