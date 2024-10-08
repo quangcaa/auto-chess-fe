@@ -6,7 +6,7 @@ import CountdownTimer from './CountdownTimer';
 import GameOverModal from './GameOverModal';
 
 const ChessGame = () => {
-  const [game, setGame] = useState(new Chess());
+  const [game, setGame] = useState(new Chess()); 
   const [highlightedSquares, setHighlightedSquares] = useState({});
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [moveHistory, setMoveHistory] = useState([]);
@@ -17,8 +17,9 @@ const ChessGame = () => {
   const [blackTimerKey, setBlackTimerKey] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [Fen,setFen] = useState(["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1"]);
-  const audio = new Audio('./sfx/capture.mp3');
+  const audio = new Audio('/sfx/capture.mp3');
 
+  //hiện nước đi hợp lệ
   const getMoveOptions = (square) => {
     const moves = game.moves({
       square,
@@ -45,6 +46,7 @@ const ChessGame = () => {
     return true;
   };
 
+  //di chuyển quân cờ bằng cách nhấn thả
   const onDrop = (sourceSquare, targetSquare, piece) => {
     const gameCopy = new Chess(game.fen());
     const move = gameCopy.move({
@@ -63,6 +65,7 @@ const ChessGame = () => {
     return true;
   };
 
+  //di chuyển quân cờ bằng cách ấn vào nước đi hợp pháp
   const onSquareClick = (square) => {
     const piece = game.get(square);
     if (selectedPiece && highlightedSquares[square]) {
@@ -73,10 +76,10 @@ const ChessGame = () => {
       });
       if (move) {
         setMoveHistory((prevHistory) => [...prevHistory, move.san]);
-        setGame(new Chess(game.fen())); // Update the game state
+        setGame(new Chess(game.fen())); 
         setFen(game.fen());
-        setHighlightedSquares({}); // Clear highlighted squares after move
-        setSelectedPiece(null); // Deselect piece
+        setHighlightedSquares({}); 
+        setSelectedPiece(null); 
       }
     } else {
       const pieceSelected = game.get(square);
@@ -90,6 +93,7 @@ const ChessGame = () => {
     }
   };
 
+  //in ra lịch sự nước đi 
   const renderMoveHistory = () => {
     const moveLines = [];
     for (let i = 0; i < moveHistory.length; i += 2) {
@@ -101,6 +105,7 @@ const ChessGame = () => {
     }
     return moveLines;
   };
+
 
   const handleTimeout = useCallback((color) => {
     if (color === 'white') {
@@ -120,7 +125,7 @@ const ChessGame = () => {
     setSelectedPiece(null);
     setMoveHistory([]);
     setIsGameOver(false)
-    setIsWhiteTimerRunning(true); // Reset timers to initial state
+    setIsWhiteTimerRunning(true); // Reset timers
     setIsBlackTimerRunning(false);
     setWinner(null);
     setWhiteTimerKey(prevKey => prevKey + 1); // Force remount of white timer
@@ -137,7 +142,11 @@ const ChessGame = () => {
       setMoveHistory((prevHistory) => [...prevHistory, lastMove]);
     }
   }
+
+
+  //kiểm tra tình trạng của game mỗi một nước đi 
   useEffect(() => {
+    //đổi turn timer
     if (game.turn() === 'w') {
       setIsWhiteTimerRunning(true);
       setIsBlackTimerRunning(false);
@@ -146,13 +155,12 @@ const ChessGame = () => {
       setIsBlackTimerRunning(true);
     }
     if (game.isCheckmate()) {
-      audio.play();
       setGame(new Chess());
       setMoveHistory([]);
       setIsGameOver(true);
       setIsWhiteTimerRunning(false);
       setIsBlackTimerRunning(false);
-      setWinner(game.turn() === 'w' ? 'Black' : 'White'); // Opposite of the current turn wins
+      setWinner(game.turn() === 'w' ? 'Black' : 'White'); 
     }
   }, [game]);
 

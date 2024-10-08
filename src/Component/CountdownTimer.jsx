@@ -5,7 +5,7 @@ const CountdownTimer = ({ initialMinutes = 0, initialSeconds = 0, isRunning = fa
   const [seconds, setSeconds] = useState(initialSeconds);
 
   useEffect(() => {
-    if (!isRunning) return; // Stop the timer if not running
+    if (!isRunning) return; // Dừng timer nếu không được gọi
 
     const countdown = setInterval(() => {
       if (seconds > 0) {
@@ -16,7 +16,7 @@ const CountdownTimer = ({ initialMinutes = 0, initialSeconds = 0, isRunning = fa
       } else if (minutes === 0 && seconds === 0) {
         clearInterval(countdown);
         if (onTimeout) {
-          onTimeout(); // Call onTimeout when the timer reaches 0
+          onTimeout(); // gọi hàm timerout khi hết giờ
         }
       }
     }, 1000);
