@@ -1,5 +1,5 @@
-import React from 'react';
-import './GameOverModal.css'; // Create this CSS file for styling
+import React from "react";
+import "./gameOverModal.css"; // Create this CSS file for styling
 
 const GameOverModal = ({ winner, onClose }) => {
   return (

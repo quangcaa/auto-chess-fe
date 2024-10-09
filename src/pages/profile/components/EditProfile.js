@@ -3,8 +3,8 @@ import './Editprofile.css'
 
 function EditProfile() {
   return (
-      <div className='edit-main'>
-        <div className='edit-main-content'>
+    <div className='edit-main'>
+      <div className='edit-main-content'>
         <div style={{ width: '100%', marginBottom: '20px' }}>
           <p style={{ fontSize: 'xx-large', color: 'red', marginBottom: '0px' }}>Edit Profile</p>
           <p>All information is public and optional.</p>
@@ -28,12 +28,12 @@ function EditProfile() {
             <input type='text' />
           </div>
         </div>
-        </div>
-        <div className='edit-submit'>
-          <hr />
-          <button>Submit</button>
-        </div>
       </div>
+      <div className='edit-submit'>
+        <hr />
+        <button>Submit</button>
+      </div>
+    </div>
   )
 }
 

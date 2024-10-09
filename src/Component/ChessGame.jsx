@@ -1,29 +1,32 @@
-import React, { useState, useEffect ,useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Chess } from "chess.js";
 import { Chessboard } from "react-chessboard";
-import './ChessGame.css';
-import CountdownTimer from './CountdownTimer';
-import GameOverModal from './GameOverModal';
+import "./chessGame.css";
+import CountdownTimer from "./CountdownTimer";
+import GameOverModal from "./GameOverModal";
 
 const ChessGame = () => {
-  const [game, setGame] = useState(new Chess()); 
+  const [game, setGame] = useState(new Chess());
   const [highlightedSquares, setHighlightedSquares] = useState({});
   const [selectedPiece, setSelectedPiece] = useState(null);
   const [moveHistory, setMoveHistory] = useState([]);
-  const [isWhiteTimerRunning, setIsWhiteTimerRunning] = useState(true); 
+  const [isWhiteTimerRunning, setIsWhiteTimerRunning] = useState(true);
   const [isBlackTimerRunning, setIsBlackTimerRunning] = useState(false); // Black's timer is initially paused
   const [winner, setWinner] = useState(null);
   const [whiteTimerKey, setWhiteTimerKey] = useState(0); // Add key for white timer
   const [blackTimerKey, setBlackTimerKey] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [Fen,setFen] = useState(["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1"]);
-  const audio = new Audio('/sfx/capture.mp3');
+  const [Fen, setFen] = useState([
+    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1",
+  ]);
+  const audio = new Audio("/sfx/capture.mp3");
 
   //hiện nước đi hợp lệ
   const getMoveOptions = (square) => {
     const moves = game.moves({
       square,
-      verbose: true
+      verbose: true,
     });
     if (moves.length === 0) {
       setHighlightedSquares({});
@@ -33,7 +36,8 @@ const ChessGame = () => {
     moves.forEach((move) => {
       newSquares[move.to] = {
         background:
-          game.get(move.to) && game.get(move.to).color !== game.get(square).color
+          game.get(move.to) &&
+          game.get(move.to).color !== game.get(square).color
             ? "radial-gradient(circle, rgba(0,0,0,.1) 85%, transparent 85%)"
             : "radial-gradient(circle, rgba(0,0,0,.1) 25%, transparent 25%)",
         borderRadius: "50%",
@@ -76,10 +80,10 @@ const ChessGame = () => {
       });
       if (move) {
         setMoveHistory((prevHistory) => [...prevHistory, move.san]);
-        setGame(new Chess(game.fen())); 
+        setGame(new Chess(game.fen()));
         setFen(game.fen());
-        setHighlightedSquares({}); 
-        setSelectedPiece(null); 
+        setHighlightedSquares({});
+        setSelectedPiece(null);
       }
     } else {
       const pieceSelected = game.get(square);
@@ -93,7 +97,7 @@ const ChessGame = () => {
     }
   };
 
-  //in ra lịch sự nước đi 
+  //in ra lịch sự nước đi
   const renderMoveHistory = () => {
     const moveLines = [];
     for (let i = 0; i < moveHistory.length; i += 2) {
@@ -106,30 +110,29 @@ const ChessGame = () => {
     return moveLines;
   };
 
-
   const handleTimeout = useCallback((color) => {
-    if (color === 'white') {
-      setWinner('Black');
+    if (color === "white") {
+      setWinner("Black");
     } else {
-      setWinner('White');
+      setWinner("White");
     }
     setIsWhiteTimerRunning(false);
-    setIsBlackTimerRunning(false); 
+    setIsBlackTimerRunning(false);
     setIsGameOver(true);
     setGame(new Chess()); // Stop both timers on timeout
-  }, []); 
+  }, []);
 
   const resetGame = () => {
     setGame(new Chess());
     setHighlightedSquares({});
     setSelectedPiece(null);
     setMoveHistory([]);
-    setIsGameOver(false)
+    setIsGameOver(false);
     setIsWhiteTimerRunning(true); // Reset timers
     setIsBlackTimerRunning(false);
     setWinner(null);
-    setWhiteTimerKey(prevKey => prevKey + 1); // Force remount of white timer
-    setBlackTimerKey(prevKey => prevKey + 1); 
+    setWhiteTimerKey((prevKey) => prevKey + 1); // Force remount of white timer
+    setBlackTimerKey((prevKey) => prevKey + 1);
   };
 
   const undoGame = () => {
@@ -141,13 +144,12 @@ const ChessGame = () => {
       setSelectedPiece(null);
       setMoveHistory((prevHistory) => [...prevHistory, lastMove]);
     }
-  }
+  };
 
-
-  //kiểm tra tình trạng của game mỗi một nước đi 
+  //kiểm tra tình trạng của game mỗi một nước đi
   useEffect(() => {
     //đổi turn timer
-    if (game.turn() === 'w') {
+    if (game.turn() === "w") {
       setIsWhiteTimerRunning(true);
       setIsBlackTimerRunning(false);
     } else {
@@ -160,7 +162,7 @@ const ChessGame = () => {
       setIsGameOver(true);
       setIsWhiteTimerRunning(false);
       setIsBlackTimerRunning(false);
-      setWinner(game.turn() === 'w' ? 'Black' : 'White'); 
+      setWinner(game.turn() === "w" ? "Black" : "White");
     }
   }, [game]);
 
@@ -174,55 +176,51 @@ const ChessGame = () => {
             initialMinutes={10}
             initialSeconds={0}
             isRunning={isBlackTimerRunning}
-            onTimeout={() => handleTimeout('black')}
+            onTimeout={() => handleTimeout("black")}
           />
         </div>
-      
-          
-        
+
         <div className="chessboard">
-        
-         <Chessboard
-          position={game.fen()}
-          onPieceDrop={onDrop}
-          customBoardStyle={{
-            borderRadius: "4px",
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.5)",
-          }}
-          customDarkSquareStyle={{
-            backgroundColor: "#779952",
-          }}
-          customLightSquareStyle={{
-            backgroundColor: "#edeed1",
-          }}
-          onSquareClick={onSquareClick}
-          customSquareStyles={highlightedSquares}
-          showPromotionDialog={true}
+          <Chessboard
+            position={game.fen()}
+            onPieceDrop={onDrop}
+            customBoardStyle={{
+              borderRadius: "4px",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.5)",
+            }}
+            customDarkSquareStyle={{
+              backgroundColor: "#779952",
+            }}
+            customLightSquareStyle={{
+              backgroundColor: "#edeed1",
+            }}
+            onSquareClick={onSquareClick}
+            customSquareStyles={highlightedSquares}
+            showPromotionDialog={true}
           />
         </div>
         <div className="timer">
-          
           <CountdownTimer
             key={whiteTimerKey}
             initialMinutes={10}
             initialSeconds={0}
             isRunning={isWhiteTimerRunning}
-            onTimeout={() => handleTimeout('white')}
+            onTimeout={() => handleTimeout("white")}
           />
         </div>
       </div>
       <div className="right-panel">
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={resetGame}>Reset Game</button>
-        <button onClick={undoGame}>Undo</button>
-      </div>
-      <div>
-        <p>Turn: {game.turn() === 'w' ? 'White' : 'Black'}</p>
-        <p>Winner: {winner ? `${winner} wins!` : "No winner yet"}</p>
-        <p>FEN: {Fen}</p>
-        <p>Move History:</p>
-        <div>{renderMoveHistory()}</div>
-      </div>
+        <div style={{ marginTop: "20px" }}>
+          <button onClick={resetGame}>Reset Game</button>
+          <button onClick={undoGame}>Undo</button>
+        </div>
+        <div>
+          <p>Turn: {game.turn() === "w" ? "White" : "Black"}</p>
+          <p>Winner: {winner ? `${winner} wins!` : "No winner yet"}</p>
+          <p>FEN: {Fen}</p>
+          <p>Move History:</p>
+          <div>{renderMoveHistory()}</div>
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
+import React from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
+import Auth from "./pages/Auth.js";
 import Home from "./pages/Home";
-import Learn from "./pages/Learn";
-import News from "./pages/News";
-import NoPage from "./pages/NoPage";
 import Puzzles from "./pages/Puzzles";
+import Inbox from "./pages/Inbox";
 import Forum from "./pages/Forum";
+import NoPage from "./pages/NoPage";
 
 export default function App() {
   return (
@@ -14,9 +15,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="learn" element={<Learn />} />
-          <Route path="news" element={<News />} />
+          <Route path="auth" element={<Auth />} />
           <Route path="puzzles" element={<Puzzles />} />
+          <Route path="inbox" element={<Inbox />} />
           <Route path="forum" element={<Forum />} />
           <Route path="*" element={<NoPage />} />
         </Route>

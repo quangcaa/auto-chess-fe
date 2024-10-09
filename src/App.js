@@ -1,8 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import ChessGame from './Component/ChessGame';
-import GameModes from './test';
-import { Route, Routes } from "react-router-dom"
 
 function App() {
   return (
