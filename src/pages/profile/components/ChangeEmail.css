@@ -1,0 +1,41 @@
+.change-email {
+    flex-basis: 750px;
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 30px;
+    padding-bottom: 30px;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+input {
+    background-color: #e1e1e1;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 100%;
+    position: relative;
+}
+
+ul {
+    list-style: none;
+}
+
+.edit-submit {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-submit hr {
+    margin: 10px;
+}
+
+.edit-submit button {
+    border: none;
+    background-color: #1497F5;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    align-self: end;
+}

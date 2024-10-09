@@ -1,0 +1,60 @@
+.close-account {
+    flex-basis: 750px;
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 30px;
+    padding-bottom: 30px;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.close-account-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.close-account-header img {
+    width: 50px;
+    object-fit: contain;
+    padding-right: 5px;
+}
+
+input {
+    background-color: #e1e1e1;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 100%;
+}
+
+
+.edit-submit {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-submit hr {
+    margin: 10px;
+}
+
+.edit-submit div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-submit div p {
+    color: blue;
+    margin: 0px;
+}
+
+.edit-submit div button {
+    border: none;
+    background-color: red;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
