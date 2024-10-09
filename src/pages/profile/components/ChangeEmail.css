@@ -1,5 +1,5 @@
-.change-password {
-    flex-basis: 700px;
+.change-email {
+    flex-basis: 750px;
     background-color: #f1f1f1;
     display: flex;
     flex-direction: column;
@@ -14,6 +14,12 @@ input {
     border: none;
     border-radius: 5px;
     height: 30px;
+    width: 100%;
+    position: relative;
+}
+
+ul {
+    list-style: none;
 }
 
 .edit-submit {

@@ -1,0 +1,16 @@
+.edit-profile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #EDEBE9;
+    gap: 10px;
+    height: 100vh;
+}
+
+.nav-bar {
+    margin-top: 20px;
+}
+
+.nav-bar p {
+    cursor: pointer;
+}
